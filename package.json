@@ -1,6 +1,7 @@
 {
   "name": "solidarity-tech-js",
   "main": "dist/index.js",
+  "version": "0.0.1",
   "devDependencies": {
     "@types/bun": "latest"
   },
@@ -17,5 +18,15 @@
     "api": "^6.1.1",
     "json-schema-to-ts": "^3.1.0",
     "oas": "^24.3.6"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:uaw-union/solidarity-tech-js.git"
+  },
+  "author": "Ben Packer <ben.paul.ryan.packer@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/uaw-union/solidarity-tech-js/issues"
+  },
+  "homepage": "https://github.com/uaw-union/solidarity-tech-js"
 }
