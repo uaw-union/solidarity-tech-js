@@ -9,9 +9,7 @@ It was last generated on 06/05/2024.
 ## Typescript Usage
 
 ```typescript
-import { createSdk } from 'solidarity-tech-js';
-
-const sdk = createSdk()
+import sdk from 'solidarity-tech-js';
 
 sdk.auth(apiKey) // not defined here
 
