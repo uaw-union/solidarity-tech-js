@@ -1,0 +1,1601 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "API V1",
+    "version": "v1"
+  },
+  "paths": {
+    "/activities": {
+      "get": {
+        "summary": "Retrieves all activities",
+        "tags": [
+          "Activities"
+        ],
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "description": "Limits the number of items returned. Default is 20, maximum is 100.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 20
+            }
+          },
+          {
+            "name": "_offset",
+            "in": "query",
+            "description": "Number of items to skip before starting to return the results.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "_since",
+            "in": "query",
+            "description": "UTC timestamp in seconds since the Unix epoch to filter activities created after this time.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "query",
+            "description": "User ID to filter activities for a specific user.",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "user_id": {
+                            "type": "integer"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "actionable_id": {
+                            "type": "integer"
+                          },
+                          "actionable_type": {
+                            "type": "string"
+                          },
+                          "action": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "integer"
+                              },
+                              "user_id": {
+                                "type": "integer"
+                              },
+                              "agent_user_id": {
+                                "type": "integer",
+                                "nullable": true
+                              },
+                              "field_type": {
+                                "type": "string",
+                                "nullable": true
+                              },
+                              "old_value": {
+                                "type": "string",
+                                "nullable": true
+                              },
+                              "new_value": {
+                                "type": "string",
+                                "nullable": true
+                              },
+                              "data_import_id": {
+                                "type": "integer",
+                                "nullable": true
+                              },
+                              "created_at": {
+                                "type": "string",
+                                "format": "date-time"
+                              },
+                              "updated_at": {
+                                "type": "string",
+                                "format": "date-time"
+                              }
+                            }
+                          },
+                          "created_at": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "updated_at": {
+                            "type": "string",
+                            "format": "date-time"
+                          }
+                        }
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "total_count": {
+                          "type": "integer"
+                        },
+                        "limit": {
+                          "type": "integer"
+                        },
+                        "offset": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/calls": {
+      "get": {
+        "summary": "Retrieves all calls",
+        "tags": [
+          "Calls"
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "query",
+            "description": "User ID to filter calls related to a specific user.",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "_limit",
+            "in": "query",
+            "description": "Limits the number of items returned. Default is 20, maximum is 100.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 20
+            }
+          },
+          {
+            "name": "_offset",
+            "in": "query",
+            "description": "Number of items to skip before starting to return the results.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "_since",
+            "in": "query",
+            "description": "UTC timestamp in seconds since the Unix epoch to filter calls created after this time.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "user_id": {
+                            "type": "integer"
+                          },
+                          "direction": {
+                            "type": "string"
+                          },
+                          "agent_user_id": {
+                            "type": "integer",
+                            "nullable": true
+                          },
+                          "duration": {
+                            "type": "integer"
+                          },
+                          "picked_up": {
+                            "type": "boolean"
+                          },
+                          "left_voicemail": {
+                            "type": "boolean"
+                          },
+                          "twilio_call_sid": {
+                            "type": "string"
+                          },
+                          "created_at": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "ended_at": {
+                            "type": "string",
+                            "format": "date-time"
+                          }
+                        }
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "total_count": {
+                          "type": "integer"
+                        },
+                        "limit": {
+                          "type": "integer"
+                        },
+                        "offset": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/chapters": {
+      "get": {
+        "summary": "Retrieves all chapters",
+        "tags": [
+          "Chapters"
+        ],
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "description": "Limits the number of items returned. Default is 20, maximum is 100.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 20
+            }
+          },
+          {
+            "name": "_offset",
+            "in": "query",
+            "description": "Number of items to skip before starting to return the results.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "_since",
+            "in": "query",
+            "description": "UTC timestamp in seconds since the Unix epoch to filter chapters created after this time.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "logo_url": {
+                            "type": "string"
+                          },
+                          "organization_id": {
+                            "type": "integer"
+                          },
+                          "chapter_phone_number": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "total_count": {
+                          "type": "integer"
+                        },
+                        "limit": {
+                          "type": "integer"
+                        },
+                        "offset": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/custom_user_properties": {
+      "get": {
+        "summary": "Retrieves all custom user properties",
+        "tags": [
+          "Custom User Properties"
+        ],
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "description": "Limits the number of items returned. Default is 20, maximum is 100.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 20
+            }
+          },
+          {
+            "name": "_offset",
+            "in": "query",
+            "description": "Number of items to skip before starting to return the results.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "_since",
+            "in": "query",
+            "description": "UTC timestamp in seconds since the Unix epoch to filter custom user properties created after this time.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "key": {
+                            "type": "string"
+                          },
+                          "field_type": {
+                            "type": "string"
+                          },
+                          "options": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "label": {
+                                  "type": "object",
+                                  "additionalProperties": {
+                                    "type": "string",
+                                    "nullable": true
+                                  }
+                                },
+                                "value": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "nullable": true
+                          },
+                          "scope_id": {
+                            "type": "integer"
+                          },
+                          "scope_type": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "total_count": {
+                          "type": "integer"
+                        },
+                        "limit": {
+                          "type": "integer"
+                        },
+                        "offset": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/texts": {
+      "post": {
+        "summary": "Sends a text message",
+        "tags": [
+          "Texts"
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          },
+          {
+            "name": "body",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "media_urls",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "required": false
+          },
+          {
+            "name": "attach_contact_card",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            },
+            "required": false
+          },
+          {
+            "name": "shorten_urls",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            },
+            "required": false
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "text sent successfully"
+          },
+          "404": {
+            "description": "user not found"
+          }
+        }
+      },
+      "get": {
+        "summary": "Retrieves a list of texts",
+        "tags": [
+          "Texts"
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            },
+            "required": false
+          },
+          {
+            "name": "_limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 20
+            },
+            "required": false
+          },
+          {
+            "name": "_offset",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 0
+            },
+            "required": false
+          },
+          {
+            "name": "_since",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "user_id": {
+                            "type": "integer"
+                          },
+                          "direction": {
+                            "type": "string"
+                          },
+                          "body": {
+                            "type": "string"
+                          },
+                          "media_urls": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "segment_size": {
+                            "type": "integer"
+                          },
+                          "chapter_phone_number_id": {
+                            "type": "integer"
+                          },
+                          "twilio_error_code": {
+                            "type": "integer"
+                          },
+                          "created_at": {
+                            "type": "string",
+                            "format": "date-time"
+                          }
+                        }
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "total_count": {
+                          "type": "integer"
+                        },
+                        "limit": {
+                          "type": "integer"
+                        },
+                        "offset": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user_actions": {
+      "post": {
+        "summary": "Creates a user action",
+        "tags": [
+          "User Actions"
+        ],
+        "description": "Creates a user action for a user. Note: This endpoint cannot be used for creating actions related to donation pages or scheduled call pages.",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "user action created"
+          },
+          "422": {
+            "description": "unprocessable entity"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "page_id": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "Identifier for the Page, required for new user actions",
+                    "nullable": false
+                  },
+                  "user_id": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "Identifier for the User",
+                    "nullable": true
+                  },
+                  "created_at": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "UTC timestamp in seconds since the Unix epoch for the creation time of the user action",
+                    "nullable": true
+                  },
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "phone_number": {
+                        "type": "string",
+                        "description": "User's phone number",
+                        "nullable": true
+                      },
+                      "email": {
+                        "type": "string",
+                        "format": "email",
+                        "description": "User's email address",
+                        "nullable": true
+                      },
+                      "first_name": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "last_name": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "preferred_language": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "second_language": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "chapter_id": {
+                        "type": "integer",
+                        "nullable": true
+                      },
+                      "address": {
+                        "type": "object",
+                        "nullable": true,
+                        "properties": {
+                          "address1": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "address2": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "city": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "state": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "zip_code": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "country": {
+                            "type": "string",
+                            "nullable": true
+                          }
+                        }
+                      },
+                      "sms_permission": {
+                        "type": "boolean",
+                        "nullable": true
+                      },
+                      "call_permission": {
+                        "type": "boolean",
+                        "nullable": true
+                      },
+                      "email_permission": {
+                        "type": "boolean",
+                        "nullable": true
+                      },
+                      "custom_user_properties": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "string"
+                        },
+                        "nullable": true
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "page_id"
+                ],
+                "oneOf": [
+                  {
+                    "required": [
+                      "user_id"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "data"
+                    ],
+                    "properties": {
+                      "data": {
+                        "type": "object",
+                        "oneOf": [
+                          {
+                            "required": [
+                              "phone_number"
+                            ]
+                          },
+                          {
+                            "required": [
+                              "email"
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "required": true,
+          "description": "Data containing user action information"
+        }
+      }
+    },
+    "/user_notes": {
+      "post": {
+        "summary": "Creates a user note",
+        "tags": [
+          "User Notes"
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          },
+          {
+            "name": "content",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "created_at",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            },
+            "required": false
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "user note created successfully"
+          },
+          "404": {
+            "description": "user not found"
+          },
+          "422": {
+            "description": "unprocessable entity"
+          }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "summary": "Creates or updates a user",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "user updated"
+          },
+          "201": {
+            "description": "user created"
+          },
+          "422": {
+            "description": "unprocessable entity"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "phone_number": {
+                        "type": "string",
+                        "format": "phone",
+                        "nullable": true
+                      },
+                      "email": {
+                        "type": "string",
+                        "format": "email",
+                        "nullable": true
+                      }
+                    },
+                    "required": [
+                      "phone_number"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "phone_number": {
+                        "type": "string",
+                        "format": "phone",
+                        "nullable": true
+                      },
+                      "email": {
+                        "type": "string",
+                        "format": "email",
+                        "nullable": true
+                      }
+                    },
+                    "required": [
+                      "email"
+                    ]
+                  }
+                ],
+                "properties": {
+                  "first_name": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "last_name": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "preferred_language": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "second_language": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "chapter_id": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "custom_user_properties": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string"
+                    },
+                    "nullable": true
+                  },
+                  "address": {
+                    "type": "object",
+                    "nullable": true,
+                    "properties": {
+                      "address1": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "address2": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "city": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "state": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "zip_code": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "country": {
+                        "type": "string",
+                        "nullable": true
+                      }
+                    }
+                  },
+                  "sms_permission": {
+                    "type": "boolean",
+                    "nullable": true
+                  },
+                  "call_permission": {
+                    "type": "boolean",
+                    "nullable": true
+                  },
+                  "email_permission": {
+                    "type": "boolean",
+                    "nullable": true
+                  }
+                },
+                "example": {
+                  "phone_number": "1234567890",
+                  "email": "john.doe@example.com",
+                  "first_name": "John",
+                  "last_name": "Doe",
+                  "preferred_language": "English",
+                  "chapter_id": 123,
+                  "custom_user_properties": {
+                    "membership_status": "Active"
+                  },
+                  "address": {
+                    "address1": "123 Main St",
+                    "city": "Anytown",
+                    "state": "CA",
+                    "zip_code": "90210",
+                    "country": "USA"
+                  },
+                  "sms_permission": true,
+                  "call_permission": true,
+                  "email_permission": true
+                }
+              }
+            }
+          },
+          "required": true,
+          "description": "User data"
+        }
+      },
+      "get": {
+        "summary": "Retrieves a list of users",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "description": "Maximum number of users to return",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 20
+            }
+          },
+          {
+            "name": "_offset",
+            "in": "query",
+            "description": "Number of users to skip before starting to return",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "_since",
+            "in": "query",
+            "description": "UTC timestamp in seconds since the Unix epoch (e.g., 1622559600) to filter users updated after this time",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "hash_id": {
+                            "type": "string"
+                          },
+                          "phone_number": {
+                            "type": "string"
+                          },
+                          "email": {
+                            "type": "string"
+                          },
+                          "first_name": {
+                            "type": "string"
+                          },
+                          "last_name": {
+                            "type": "string"
+                          },
+                          "preferred_language": {
+                            "type": "string"
+                          },
+                          "second_language": {
+                            "type": "string"
+                          },
+                          "chapter_id": {
+                            "type": "integer"
+                          },
+                          "branch_id": {
+                            "type": "integer"
+                          },
+                          "created_at": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "custom_user_properties": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "type": "string"
+                            }
+                          },
+                          "address": {
+                            "type": "object",
+                            "properties": {
+                              "address1": {
+                                "type": "string"
+                              },
+                              "address2": {
+                                "type": "string"
+                              },
+                              "city": {
+                                "type": "string"
+                              },
+                              "state": {
+                                "type": "string"
+                              },
+                              "zip_code": {
+                                "type": "string"
+                              },
+                              "country": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "sms_permission": {
+                            "type": "boolean"
+                          },
+                          "call_permission": {
+                            "type": "boolean"
+                          },
+                          "email_permission": {
+                            "type": "boolean"
+                          }
+                        }
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "total_count": {
+                          "type": "integer"
+                        },
+                        "limit": {
+                          "type": "integer"
+                        },
+                        "offset": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "put": {
+        "summary": "Updates a user",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the user to update",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "user updated"
+          },
+          "404": {
+            "description": "user not found"
+          },
+          "422": {
+            "description": "unprocessable entity"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "phone_number": {
+                    "type": "string",
+                    "format": "phone",
+                    "nullable": true
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "nullable": true
+                  },
+                  "first_name": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "last_name": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "preferred_language": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "second_language": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "chapter_id": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "custom_user_properties": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string"
+                    },
+                    "nullable": true
+                  },
+                  "address": {
+                    "type": "object",
+                    "properties": {
+                      "address1": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "address2": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "city": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "state": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "zip_code": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "country": {
+                        "type": "string",
+                        "nullable": true
+                      }
+                    },
+                    "nullable": true
+                  },
+                  "sms_permission": {
+                    "type": "boolean",
+                    "nullable": true
+                  },
+                  "call_permission": {
+                    "type": "boolean",
+                    "nullable": true
+                  },
+                  "email_permission": {
+                    "type": "boolean",
+                    "nullable": true
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "BearerAuth": []
+    }
+  ],
+  "servers": [
+    {
+      "url": "https://api.solidarity.tech/v1/",
+      "variables": {
+        "defaultHost": {
+          "default": "api.solidarity.tech"
+        }
+      }
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "hash_id": {
+            "type": "string"
+          },
+          "phone_number": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "first_name": {
+            "type": "string"
+          },
+          "last_name": {
+            "type": "string"
+          },
+          "preferred_language": {
+            "type": "string"
+          },
+          "second_language": {
+            "type": "string"
+          },
+          "chapter_id": {
+            "type": "integer"
+          },
+          "branch_id": {
+            "type": "integer"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "custom_user_properties": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "address": {
+            "type": "object",
+            "properties": {
+              "address1": {
+                "type": "string"
+              },
+              "address2": {
+                "type": "string"
+              },
+              "city": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              },
+              "zip_code": {
+                "type": "string"
+              },
+              "country": {
+                "type": "string"
+              }
+            }
+          },
+          "sms_permission": {
+            "type": "boolean"
+          },
+          "call_permission": {
+            "type": "boolean"
+          },
+          "email_permission": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Chapter": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "logo_url": {
+            "type": "string"
+          },
+          "organization_id": {
+            "type": "integer"
+          },
+          "chapter_phone_number": {
+            "type": "string"
+          }
+        }
+      },
+      "UserNote": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "content": {
+            "type": "string"
+          },
+          "user_id": {
+            "type": "integer"
+          }
+        }
+      },
+      "CustomUserProperty": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "field_type": {
+            "type": "string"
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "scope_id": {
+            "type": "integer"
+          },
+          "scope_type": {
+            "type": "string"
+          }
+        }
+      },
+      "Call": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "user_id": {
+            "type": "integer"
+          },
+          "direction": {
+            "type": "string"
+          },
+          "agent_user_id": {
+            "type": "integer",
+            "nullable": true
+          },
+          "duration": {
+            "type": "integer"
+          },
+          "picked_up": {
+            "type": "boolean"
+          },
+          "left_voicemail": {
+            "type": "boolean"
+          },
+          "twilio_call_sid": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ended_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Text": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "user_id": {
+            "type": "integer"
+          },
+          "direction": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          },
+          "media_urls": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "segment_size": {
+            "type": "integer"
+          },
+          "chapter_phone_number_id": {
+            "type": "integer"
+          },
+          "twilio_error_code": {
+            "type": "integer"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Activity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "user_id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "actionable_id": {
+            "type": "integer"
+          },
+          "actionable_type": {
+            "type": "string"
+          },
+          "action": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "user_id": {
+                "type": "integer"
+              },
+              "agent_user_id": {
+                "type": "integer",
+                "nullable": true
+              },
+              "field_type": {
+                "type": "string",
+                "nullable": true
+              },
+              "old_value": {
+                "type": "string",
+                "nullable": true
+              },
+              "new_value": {
+                "type": "string",
+                "nullable": true
+              },
+              "data_import_id": {
+                "type": "integer",
+                "nullable": true
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updated_at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  }
+}

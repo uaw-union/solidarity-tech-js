@@ -1,0 +1,11 @@
+{
+  "version": "1.0",
+  "apis": [
+    {
+      "identifier": "solidarity-tech",
+      "source": "@solidarity-tech/v1.0#1a0dufvlx2dzygs",
+      "integrity": "sha512-Y2cJF0MCX3VD1pI7PMzFv7kkdNy11M450nz/VBL6syO/NR3JjS0BfR3+QaFbT4m3mpqQ4etOvLGY0RL2LkuwZg==",
+      "installerVersion": "6.1.1"
+    }
+  ]
+}
