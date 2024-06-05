@@ -1,5 +1,5 @@
-import { default as createSdk } from "./.api/apis/solidarity-tech/index";
+import { default as createSDK } from "./.api/apis/solidarity-tech/index";
 export * from "./.api/apis/solidarity-tech/index";
 
-export { createSdk };
-export default createSdk;
+export { createSDK };
+export default createSDK;
