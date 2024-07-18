@@ -1,7 +1,7 @@
 {
   "name": "solidarity-tech-js",
   "main": "dist/index.js",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "devDependencies": {
     "@types/bun": "latest"
   },
@@ -15,6 +15,7 @@
     "dist"
   ],
   "dependencies": {
+    "@api/solidarity-tech": "file:.api/apis/solidarity-tech",
     "api": "^6.1.1",
     "json-schema-to-ts": "^3.1.0",
     "oas": "^24.3.6"

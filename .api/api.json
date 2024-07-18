@@ -3,8 +3,8 @@
   "apis": [
     {
       "identifier": "solidarity-tech",
-      "source": "@solidarity-tech/v1.0#1a0dufvlx2dzygs",
-      "integrity": "sha512-Y2cJF0MCX3VD1pI7PMzFv7kkdNy11M450nz/VBL6syO/NR3JjS0BfR3+QaFbT4m3mpqQ4etOvLGY0RL2LkuwZg==",
+      "source": "@solidarity-tech/v1.0#lfqy225lyhwzhmj",
+      "integrity": "sha512-kzKIA8TfKAeuJ9CD467mt70MkWW1G/0NqhHdiW7duzgd1bkdsSSPYCWn20UkKkLmc7edR1NT4ggqm1vQcRxy1A==",
       "installerVersion": "6.1.1"
     }
   ]
