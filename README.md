@@ -4,7 +4,7 @@ This is simply the solidarity.tech [API generator](https://docs.solidarity.tech/
 for use in environments that don't support folders well (or importing JSON),
 such as [Windmill scripts](https://windmill.dev/).
 
-It was last generated on 06/05/2024.
+It was last generated on 2024-07-18.
 
 ## Typescript Usage
 
