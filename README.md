@@ -21,7 +21,7 @@ sdk.auth(apiKey) // not defined here
 This is just a note for myself on how to update this library when needed.
 ```bash
 $ mv index.ts temp.ts
-$ npx api install "@solidarity-tech/v1.0#<latest hash from https://docs.solidarity.tech/reference/delete_user-lists-id>" --lang ts --yes
+$ npx api install "@solidarity-tech/v1.0#<latest hash from https://docs.solidarity.tech/reference" --lang ts --yes
 $ mv temp.ts index.ts
 ```
 
