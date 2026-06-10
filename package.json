@@ -29,5 +29,8 @@
   "bugs": {
     "url": "https://github.com/uaw-union/solidarity-tech-js/issues"
   },
-  "homepage": "https://github.com/uaw-union/solidarity-tech-js"
+  "homepage": "https://github.com/uaw-union/solidarity-tech-js",
+  "trustedDependencies": [
+    "es5-ext"
+  ]
 }
