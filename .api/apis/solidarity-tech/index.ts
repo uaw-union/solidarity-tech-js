@@ -10,7 +10,7 @@ class SDK {
 
   constructor() {
     this.spec = Oas.init(definition);
-    this.core = new APICore(this.spec, 'solidarity-tech/v1 (api/6.1.1)');
+    this.core = new APICore(this.spec, 'solidarity-tech/v1 (api/6.1.3)');
   }
 
   /**
@@ -125,6 +125,14 @@ class SDK {
   }
 
   /**
+   * Enroll user in an automation
+   *
+   */
+  postAutomation_enrollments(body: types.PostAutomationEnrollmentsBodyParam): Promise<FetchResponse<number, unknown>> {
+    return this.core.fetch('/automation_enrollments', 'post', body);
+  }
+
+  /**
    * Retrieves all calls
    *
    */
@@ -166,6 +174,16 @@ class SDK {
   }
 
   /**
+   * Removes an option from a custom user property
+   *
+   * @throws FetchError<404, types.DeleteCustomUserPropertiesCustomUserPropertyIdOptionsIdResponse404> option or custom user property not found
+   * @throws FetchError<422, types.DeleteCustomUserPropertiesCustomUserPropertyIdOptionsIdResponse422> validation failed
+   */
+  deleteCustom_user_propertiesCustom_user_property_idOptionsId(metadata: types.DeleteCustomUserPropertiesCustomUserPropertyIdOptionsIdMetadataParam): Promise<FetchResponse<200, types.DeleteCustomUserPropertiesCustomUserPropertyIdOptionsIdResponse200>> {
+    return this.core.fetch('/custom_user_properties/{custom_user_property_id}/options/{id}', 'delete', metadata);
+  }
+
+  /**
    * Creates an option for a custom user property
    *
    * @throws FetchError<404, types.PostCustomUserPropertiesIdOptionsResponse404> custom user property not found
@@ -176,13 +194,19 @@ class SDK {
   }
 
   /**
-   * Removes an option from a custom user property
+   * Lists donation charges
    *
-   * @throws FetchError<404, types.DeleteCustomUserPropertiesCustomUserPropertyIdOptionsIdResponse404> option or custom user property not found
-   * @throws FetchError<422, types.DeleteCustomUserPropertiesCustomUserPropertyIdOptionsIdResponse422> validation failed
    */
-  deleteCustom_user_propertiesCustom_user_property_idOptionsId(metadata: types.DeleteCustomUserPropertiesCustomUserPropertyIdOptionsIdMetadataParam): Promise<FetchResponse<200, types.DeleteCustomUserPropertiesCustomUserPropertyIdOptionsIdResponse200>> {
-    return this.core.fetch('/custom_user_properties/{custom_user_property_id}/options/{id}', 'delete', metadata);
+  getDonation_charges(metadata?: types.GetDonationChargesMetadataParam): Promise<FetchResponse<200, types.GetDonationChargesResponse200>> {
+    return this.core.fetch('/donation_charges', 'get', metadata);
+  }
+
+  /**
+   * Retrieves a donation charge
+   *
+   */
+  getDonation_chargesId(metadata: types.GetDonationChargesIdMetadataParam): Promise<FetchResponse<number, unknown>> {
+    return this.core.fetch('/donation_charges/{id}', 'get', metadata);
   }
 
   /**
@@ -199,6 +223,26 @@ class SDK {
    */
   getEmail_blastsId(metadata: types.GetEmailBlastsIdMetadataParam): Promise<FetchResponse<number, unknown>> {
     return this.core.fetch('/email_blasts/{id}', 'get', metadata);
+  }
+
+  /**
+   * Returns a list of email senders available for the API key's scope. Use these sender IDs
+   * when sending emails via the POST /emails endpoint.
+   *
+   * @summary Lists available email senders
+   */
+  getEmail_senders(metadata?: types.GetEmailSendersMetadataParam): Promise<FetchResponse<200, types.GetEmailSendersResponse200>> {
+    return this.core.fetch('/email_senders', 'get', metadata);
+  }
+
+  /**
+   * Sends a single transactional email to a user. Supports Liquid templating for
+   * personalization (e.g., {{ first_name }}).
+   *
+   * @summary Sends a one-off email to a user
+   */
+  postEmails(metadata: types.PostEmailsMetadataParam): Promise<FetchResponse<number, unknown>> {
+    return this.core.fetch('/emails', 'post', metadata);
   }
 
   /**
@@ -314,19 +358,49 @@ class SDK {
   }
 
   /**
-   * Lists events
+   * Lists events accessible within the given scope. Each event in the response includes
+   * `primary_event_id` and `is_co_hosted_mirror`. For co-hosted events that appear across
+   * multiple organizations, `primary_event_id` always resolves to the original event ID,
+   * allowing you to identify that two events from different scopes represent the same real
+   * world event. Each event session also includes `primary_session_id` for the same purpose.
+   * Events with an event page also include `image_url` and `description` fields.
    *
+   * @summary Lists events
    */
   getEvents(metadata?: types.GetEventsMetadataParam): Promise<FetchResponse<number, unknown>> {
     return this.core.fetch('/events', 'get', metadata);
   }
 
   /**
-   * Shows a single event
+   * Creates an event with its first event session. The event session inherits the title from
+   * the event unless session_title is provided.
    *
+   * @summary Creates an event
+   */
+  postEvents(body: types.PostEventsBodyParam): Promise<FetchResponse<number, unknown>> {
+    return this.core.fetch('/events', 'post', body);
+  }
+
+  /**
+   * Returns a single event. The response includes `primary_event_id` (always resolves to the
+   * original event ID, even for co-hosted mirrors) and `is_co_hosted_mirror` (true if this
+   * event is a mirror copy from a co-host relationship). Event sessions include
+   * `primary_session_id` for the same purpose. If the event has an event page, the response
+   * also includes `image_url` (the event page image) and `description` (plain text content
+   * from the event page). Both fields are null when no event page exists.
+   *
+   * @summary Shows a single event
    */
   getEventsId(metadata: types.GetEventsIdMetadataParam): Promise<FetchResponse<number, unknown>> {
     return this.core.fetch('/events/{id}', 'get', metadata);
+  }
+
+  /**
+   * Generates a field survey URL
+   *
+   */
+  postField_survey_urls(body: types.PostFieldSurveyUrlsBodyParam): Promise<FetchResponse<200, types.PostFieldSurveyUrlsResponse200>> {
+    return this.core.fetch('/field_survey_urls', 'post', body);
   }
 
   /**
@@ -479,9 +553,10 @@ class SDK {
   }
 
   /**
-   * Creates an task assignment with the specified details.
+   * Creates a task assignment, assigning a user to participate in a phonebank or textbank
+   * campaign.
    *
-   * @summary Creates an task assignment
+   * @summary Creates a task assignment
    */
   postTask_assignments(body: types.PostTaskAssignmentsBodyParam): Promise<FetchResponse<number, unknown>> {
     return this.core.fetch('/task_assignments', 'post', body);
@@ -519,6 +594,22 @@ class SDK {
    */
   getTeam_members(metadata?: types.GetTeamMembersMetadataParam): Promise<FetchResponse<number, unknown>> {
     return this.core.fetch('/team_members', 'get', metadata);
+  }
+
+  /**
+   * Creates a new team member
+   *
+   */
+  postTeam_members(body: types.PostTeamMembersBodyParam): Promise<FetchResponse<number, unknown>> {
+    return this.core.fetch('/team_members', 'post', body);
+  }
+
+  /**
+   * Updates a team member
+   *
+   */
+  putTeam_membersId(body: types.PutTeamMembersIdBodyParam, metadata: types.PutTeamMembersIdMetadataParam): Promise<FetchResponse<number, unknown>> {
+    return this.core.fetch('/team_members/{id}', 'put', body, metadata);
   }
 
   /**
@@ -613,7 +704,9 @@ class SDK {
   }
 
   /**
-   * Lists user actions. Can be filtered by user_id, page_id, or both.
+   * Lists user actions (form submissions). Can be filtered by user_id, page_id, or both. To
+   * get custom form responses for event RSVPs, first get the event's event_page_id from GET
+   * /events/{id}, then query this endpoint with that page_id. Match to RSVPs by user_id.
    *
    * @summary Retrieves user actions
    */
@@ -733,6 +826,14 @@ class SDK {
   }
 
   /**
+   * Merge duplicate users
+   *
+   */
+  postUsersMerge(body: types.PostUsersMergeBodyParam): Promise<FetchResponse<200, types.PostUsersMergeResponse200>> {
+    return this.core.fetch('/users/merge', 'post', body);
+  }
+
+  /**
    * Shows a single user
    *
    */
@@ -754,4 +855,4 @@ const createSDK = (() => { return new SDK(); })()
 
 export default createSDK;
 
-export type { DeleteAgentAssignmentsIdMetadataParam, DeleteCustomUserPropertiesCustomUserPropertyIdOptionsIdMetadataParam, DeleteCustomUserPropertiesCustomUserPropertyIdOptionsIdResponse200, DeleteCustomUserPropertiesCustomUserPropertyIdOptionsIdResponse404, DeleteCustomUserPropertiesCustomUserPropertyIdOptionsIdResponse422, DeleteEventAttendancesIdMetadataParam, DeleteEventRsvpsIdMetadataParam, DeleteEventSessionsIdMetadataParam, DeleteScheduledTasksIdMetadataParam, DeleteTaskAgentsIdMetadataParam, DeleteTaskAssignmentsIdMetadataParam, DeleteTextTemplatesIdMetadataParam, DeleteUserListsIdMetadataParam, DeleteUserNotesIdMetadataParam, DeleteUserRelationshipsIdMetadataParam, GetActivitiesMetadataParam, GetActivitiesResponse200, GetAgentAssignmentsIdMetadataParam, GetAgentAssignmentsMetadataParam, GetCallsMetadataParam, GetCallsResponse200, GetChapterPhoneNumbersMetadataParam, GetChaptersMetadataParam, GetChaptersResponse200, GetCustomUserPropertiesMetadataParam, GetCustomUserPropertiesResponse200, GetEmailBlastsIdMetadataParam, GetEmailBlastsMetadataParam, GetEventAttendancesMetadataParam, GetEventRsvpsIdMetadataParam, GetEventRsvpsMetadataParam, GetEventSessionsIdMetadataParam, GetEventSessionsMetadataParam, GetEventsIdMetadataParam, GetEventsMetadataParam, GetOrganizationsIdMetadataParam, GetOrganizationsMetadataParam, GetPagesIdMetadataParam, GetPagesMetadataParam, GetPhonebanksIdMetadataParam, GetPhonebanksMetadataParam, GetScheduledCallsIdMetadataParam, GetScheduledCallsMetadataParam, GetScheduledTasksIdMetadataParam, GetScheduledTasksMetadataParam, GetTaskAgentsIdMetadataParam, GetTaskAgentsMetadataParam, GetTaskAssignmentsIdMetadataParam, GetTaskAssignmentsMetadataParam, GetTeamMembersMetadataParam, GetTextBlastsIdMetadataParam, GetTextBlastsMetadataParam, GetTextTemplatesIdMetadataParam, GetTextTemplatesMetadataParam, GetTextbanksIdMetadataParam, GetTextbanksMetadataParam, GetTextsMetadataParam, GetTextsResponse200, GetUserActionsMetadataParam, GetUserListsIdMetadataParam, GetUserListsMetadataParam, GetUserRelationshipsMetadataParam, GetUserRelationshipsResponse200, GetUsersIdMetadataParam, GetUsersIdResponse200, GetUsersMetadataParam, GetUsersResponse200, PostAgentAssignmentsBodyParam, PostCustomUserPropertiesBodyParam, PostCustomUserPropertiesIdOptionsBodyParam, PostCustomUserPropertiesIdOptionsMetadataParam, PostCustomUserPropertiesIdOptionsResponse201, PostCustomUserPropertiesIdOptionsResponse404, PostCustomUserPropertiesIdOptionsResponse422, PostCustomUserPropertiesResponse201, PostCustomUserPropertiesResponse422, PostEventAttendancesBodyParam, PostEventRsvpsBodyParam, PostEventSessionsBodyParam, PostScheduledTasksBodyParam, PostTaskAgentsBodyParam, PostTaskAssignmentsBodyParam, PostTextTemplatesBodyParam, PostTextsMetadataParam, PostUserActionsBodyParam, PostUserListsBodyParam, PostUserNotesMetadataParam, PostUserRelationshipsMetadataParam, PostUsersBodyParam, PutAgentAssignmentsIdBodyParam, PutAgentAssignmentsIdMetadataParam, PutEventRsvpsIdBodyParam, PutEventRsvpsIdMetadataParam, PutEventSessionsIdBodyParam, PutEventSessionsIdMetadataParam, PutScheduledTasksIdBodyParam, PutScheduledTasksIdMetadataParam, PutTaskAssignmentsIdBodyParam, PutTaskAssignmentsIdMetadataParam, PutTextTemplatesIdBodyParam, PutTextTemplatesIdMetadataParam, PutUserListsIdBodyParam, PutUserListsIdMetadataParam, PutUsersIdBodyParam, PutUsersIdMetadataParam } from './types';
+export type { DeleteAgentAssignmentsIdMetadataParam, DeleteCustomUserPropertiesCustomUserPropertyIdOptionsIdMetadataParam, DeleteCustomUserPropertiesCustomUserPropertyIdOptionsIdResponse200, DeleteCustomUserPropertiesCustomUserPropertyIdOptionsIdResponse404, DeleteCustomUserPropertiesCustomUserPropertyIdOptionsIdResponse422, DeleteEventAttendancesIdMetadataParam, DeleteEventRsvpsIdMetadataParam, DeleteEventSessionsIdMetadataParam, DeleteScheduledTasksIdMetadataParam, DeleteTaskAgentsIdMetadataParam, DeleteTaskAssignmentsIdMetadataParam, DeleteTextTemplatesIdMetadataParam, DeleteUserListsIdMetadataParam, DeleteUserNotesIdMetadataParam, DeleteUserRelationshipsIdMetadataParam, GetActivitiesMetadataParam, GetActivitiesResponse200, GetAgentAssignmentsIdMetadataParam, GetAgentAssignmentsMetadataParam, GetCallsMetadataParam, GetCallsResponse200, GetChapterPhoneNumbersMetadataParam, GetChaptersMetadataParam, GetChaptersResponse200, GetCustomUserPropertiesMetadataParam, GetCustomUserPropertiesResponse200, GetDonationChargesIdMetadataParam, GetDonationChargesMetadataParam, GetDonationChargesResponse200, GetEmailBlastsIdMetadataParam, GetEmailBlastsMetadataParam, GetEmailSendersMetadataParam, GetEmailSendersResponse200, GetEventAttendancesMetadataParam, GetEventRsvpsIdMetadataParam, GetEventRsvpsMetadataParam, GetEventSessionsIdMetadataParam, GetEventSessionsMetadataParam, GetEventsIdMetadataParam, GetEventsMetadataParam, GetOrganizationsIdMetadataParam, GetOrganizationsMetadataParam, GetPagesIdMetadataParam, GetPagesMetadataParam, GetPhonebanksIdMetadataParam, GetPhonebanksMetadataParam, GetScheduledCallsIdMetadataParam, GetScheduledCallsMetadataParam, GetScheduledTasksIdMetadataParam, GetScheduledTasksMetadataParam, GetTaskAgentsIdMetadataParam, GetTaskAgentsMetadataParam, GetTaskAssignmentsIdMetadataParam, GetTaskAssignmentsMetadataParam, GetTeamMembersMetadataParam, GetTextBlastsIdMetadataParam, GetTextBlastsMetadataParam, GetTextTemplatesIdMetadataParam, GetTextTemplatesMetadataParam, GetTextbanksIdMetadataParam, GetTextbanksMetadataParam, GetTextsMetadataParam, GetTextsResponse200, GetUserActionsMetadataParam, GetUserListsIdMetadataParam, GetUserListsMetadataParam, GetUserRelationshipsMetadataParam, GetUserRelationshipsResponse200, GetUsersIdMetadataParam, GetUsersIdResponse200, GetUsersMetadataParam, GetUsersResponse200, PostAgentAssignmentsBodyParam, PostAutomationEnrollmentsBodyParam, PostCustomUserPropertiesBodyParam, PostCustomUserPropertiesIdOptionsBodyParam, PostCustomUserPropertiesIdOptionsMetadataParam, PostCustomUserPropertiesIdOptionsResponse201, PostCustomUserPropertiesIdOptionsResponse404, PostCustomUserPropertiesIdOptionsResponse422, PostCustomUserPropertiesResponse201, PostCustomUserPropertiesResponse422, PostEmailsMetadataParam, PostEventAttendancesBodyParam, PostEventRsvpsBodyParam, PostEventSessionsBodyParam, PostEventsBodyParam, PostFieldSurveyUrlsBodyParam, PostFieldSurveyUrlsResponse200, PostScheduledTasksBodyParam, PostTaskAgentsBodyParam, PostTaskAssignmentsBodyParam, PostTeamMembersBodyParam, PostTextTemplatesBodyParam, PostTextsMetadataParam, PostUserActionsBodyParam, PostUserListsBodyParam, PostUserNotesMetadataParam, PostUserRelationshipsMetadataParam, PostUsersBodyParam, PostUsersMergeBodyParam, PostUsersMergeResponse200, PutAgentAssignmentsIdBodyParam, PutAgentAssignmentsIdMetadataParam, PutEventRsvpsIdBodyParam, PutEventRsvpsIdMetadataParam, PutEventSessionsIdBodyParam, PutEventSessionsIdMetadataParam, PutScheduledTasksIdBodyParam, PutScheduledTasksIdMetadataParam, PutTaskAssignmentsIdBodyParam, PutTaskAssignmentsIdMetadataParam, PutTeamMembersIdBodyParam, PutTeamMembersIdMetadataParam, PutTextTemplatesIdBodyParam, PutTextTemplatesIdMetadataParam, PutUserListsIdBodyParam, PutUserListsIdMetadataParam, PutUsersIdBodyParam, PutUsersIdMetadataParam } from './types';
