@@ -9,25 +9,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 9
-
+      - uses: oven-sh/setup-bun@v2
       - name: Setup Node
         uses: actions/setup-node@v3
-        with:
-          cache-dependency-path: pnpm-lock.yaml
-          registry-url: 'https://registry.npmjs.org'
-          cache: pnpm
-
       - name: Install packages
         shell: bash
         run: |
-          pnpm install
+          bun install
 
           if ! test -z "`git diff --stat`"; then
-            echo "Changes were found; please run 'pnpm install' and commit the output."
+            echo "Changes were found; please run 'bun install' and commit the output."
             echo
             git diff --name-only
             exit 1
