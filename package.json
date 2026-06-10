@@ -1,5 +1,5 @@
 {
-  "name": "solidarity-tech-js",
+  "name": "@a1liu/solidarity-tech-api",
   "main": "dist/index.js",
   "version": "0.1.5",
   "devDependencies": {
