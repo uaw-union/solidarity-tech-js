@@ -15,7 +15,7 @@ jobs:
       - name: Install packages
         shell: bash
         run: |
-          bun install
+          bun install --frozen-lockfile
 
           if ! test -z "`git diff --stat`"; then
             echo "Changes were found; please run 'bun install' and commit the output."
