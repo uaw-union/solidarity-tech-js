@@ -23,14 +23,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:uaw-union/solidarity-tech-js.git"
+    "url": "git@github.com:A1Liu/solidarity-tech-js.git"
   },
-  "author": "Ben Packer <ben.paul.ryan.packer@gmail.com>",
+  "author": "Albert Liu",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/uaw-union/solidarity-tech-js/issues"
-  },
-  "homepage": "https://github.com/uaw-union/solidarity-tech-js",
+  "homepage": "https://github.com/A1Liu/solidarity-tech-js",
   "trustedDependencies": [
     "es5-ext"
   ]
