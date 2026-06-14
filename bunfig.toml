@@ -1,0 +1,3 @@
+[install]
+# Wait 3 weeks for releases to settle before using them
+minimumReleaseAge = 1814400
