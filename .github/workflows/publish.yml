@@ -23,6 +23,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          registry-url: 'https://registry.npmjs.org'
+          node-version: 24
 
       - name: Install packages
         shell: bash
@@ -50,7 +55,7 @@ jobs:
 
       - name: Publish package on NPM 📦
         run: |
-          bun publish
+          npm publish
 
       - name: Push version commit
         run: git push origin HEAD:${{ github.ref_name }}
