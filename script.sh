@@ -4,5 +4,5 @@ if [ -z "$1" ]; then
 fi
 
 mv index.ts temp.ts
-npx api install "@solidarity-tech/v1.0#$1" --lang ts --yes
+bunx api install "@solidarity-tech/v1.0#$1" --lang ts --yes
 mv temp.ts index.ts
