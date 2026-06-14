@@ -10,7 +10,7 @@ class SDK {
 
   constructor() {
     this.spec = Oas.init(definition);
-    this.core = new APICore(this.spec, 'solidarity-tech/v1 (api/6.1.3)');
+    this.core = new APICore(this.spec as any, 'solidarity-tech/v1 (api/6.1.3)');
   }
 
   /**
