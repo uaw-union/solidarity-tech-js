@@ -357,23 +357,6 @@ export function deleteEventSession(config: ClientConfig, id: number): Promise<Ap
 }
 
 /* ------------------------------------------------------------------ *
- * Events
- * ------------------------------------------------------------------ */
-
-/** GET /events — Lists events. */
-export function listEvents(
-  config: ClientConfig,
-  params: ListParams = {},
-): Promise<ApiResult<unknown>> {
-  return apiGet(config, "/events", { query: { ...params } });
-}
-
-/** GET /events/{id} — Shows a single event. */
-export function getEvent(config: ClientConfig, id: number): Promise<ApiResult<unknown>> {
-  return apiGet(config, `/events/${id}`);
-}
-
-/* ------------------------------------------------------------------ *
  * Organizations
  * ------------------------------------------------------------------ */
 

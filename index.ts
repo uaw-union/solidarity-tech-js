@@ -1,9 +1,13 @@
 import type { ClientConfig } from "./client";
-import * as endpoints from "./endpoints";
+import * as coreEndpoints from "./endpoints";
+import * as eventEndpoints from "./endpoints/events";
 
 export * from "./client";
 export * from "./schemas";
 export * from "./endpoints";
+export * from "./endpoints/events";
+
+const endpoints = { ...coreEndpoints, ...eventEndpoints };
 
 type EndpointFn = (config: ClientConfig, ...args: never[]) => unknown;
 
