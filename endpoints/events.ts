@@ -2,7 +2,7 @@ import { z } from "zod";
 import { apiGet } from "../client";
 import type { ApiResult, ClientConfig } from "../client";
 import { paginationMeta } from "../schemas";
-import type { ListParams } from "../endpoints";
+import type { ListParams } from "../schemas";
 
 /* ------------------------------------------------------------------ *
  * Schemas

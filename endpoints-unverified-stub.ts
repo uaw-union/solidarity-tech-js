@@ -15,40 +15,11 @@ import type {
   CustomUserPropertiesResponse,
   TextsResponse,
   UsersResponse,
+  ListParams,
+  ScopeType,
+  Address,
+  EventLocationData,
 } from "./schemas";
-
-/* ------------------------------------------------------------------ *
- * Shared request shapes
- * ------------------------------------------------------------------ */
-
-/** Pagination/`_since` parameters common to every list endpoint. */
-export interface ListParams {
-  _limit?: number;
-  _offset?: number;
-  _since?: number;
-}
-
-export type ScopeType = "Organization" | "Chapter";
-
-export interface Address {
-  address1?: string | null;
-  address2?: string | null;
-  city?: string | null;
-  state?: string | null;
-  zip_code?: string | null;
-  country?: string | null;
-}
-
-export interface EventLocationData {
-  components?: string | null;
-  coordinates?: string | null;
-  address_city?: string | null;
-  full_address?: string | null;
-  address_state?: string | null;
-  address_line_1?: string | null;
-  address_country?: string | null;
-  address_postal_code?: string | null;
-}
 
 /* ------------------------------------------------------------------ *
  * Activities
