@@ -33,9 +33,37 @@ const coordinatesField = z
     return val;
   });
 
+/** A single Google-style address component. */
+export const stAddressComponent = z.object({
+  long_name: z.string(),
+  short_name: z.string(),
+  types: z.array(z.string()),
+});
+
+const componentsArray = z.array(stAddressComponent);
+
+// The raw API sends `components` as a JSON-stringified array of address
+// components, an empty string (when none), an already-parsed array, or
+// null/absent. Normalize all of those into a `StAddressComponent[] | null`.
+const componentsField = z
+  .union([z.array(z.unknown()), z.string(), z.null()])
+  .optional()
+  .transform((val): z.infer<typeof stAddressComponent>[] | null => {
+    if (val == null || val === "") return null;
+    if (typeof val === "string") {
+      try {
+        const parsed = componentsArray.safeParse(JSON.parse(val));
+        return parsed.success ? parsed.data : null;
+      } catch {
+        return null;
+      }
+    }
+    const parsed = componentsArray.safeParse(val);
+    return parsed.success ? parsed.data : null;
+  });
+
 export const stLocationData = z.object({
-  // Either an empty string or an array of Google-style address components.
-  components: z.union([z.string(), z.array(z.unknown())]).optional(),
+  components: componentsField,
   coordinates: coordinatesField,
   address_city: z.string().optional(),
   full_address: z.string().optional(),
@@ -108,6 +136,7 @@ export const eventsResponse = z.object({
 });
 
 export type StCoordinates = z.infer<typeof stCoordinates>;
+export type StAddressComponent = z.infer<typeof stAddressComponent>;
 export type StLocationData = z.infer<typeof stLocationData>;
 export type StEventSession = z.infer<typeof stEventSession>;
 export type StEvent = z.infer<typeof stEvent>;

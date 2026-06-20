@@ -8,9 +8,7 @@ if (!apiKey) {
 
 const client = createClient({ apiKey });
 
-const res = await client.listEvents({
-  _limit: 1,
-});
+const res = await client.listEvents({});
 
 if (!res.ok) {
   console.error("Request failed:", res.error);
