@@ -8,17 +8,35 @@ import type { ListParams } from "../endpoints";
  * Schemas
  * ------------------------------------------------------------------ */
 
-/** Parsed `{lng, lat}` pair (the API sends this JSON-stringified). */
+/** Parsed `{lng, lat}` pair. */
 export const stCoordinates = z.object({
   lng: z.number(),
   lat: z.number(),
 });
 
+// The raw API sends `coordinates` as either a `{lat, lng}` object, an empty
+// string (when ungeocoded), a JSON-stringified `{lng, lat}`, or null/absent.
+// Normalize all of those into a `StCoordinates | null`.
+const coordinatesField = z
+  .union([stCoordinates, z.string(), z.null()])
+  .optional()
+  .transform((val): z.infer<typeof stCoordinates> | null => {
+    if (val == null || val === "") return null;
+    if (typeof val === "string") {
+      try {
+        const parsed = stCoordinates.safeParse(JSON.parse(val));
+        return parsed.success ? parsed.data : null;
+      } catch {
+        return null;
+      }
+    }
+    return val;
+  });
+
 export const stLocationData = z.object({
-  components: z.string().optional(),
-  // Raw from the API as a JSON-stringified `{lng, lat}`; `fetchAllEvents`
-  // parses it into this object (or null when absent/invalid).
-  coordinates: stCoordinates.nullable().optional(),
+  // Either an empty string or an array of Google-style address components.
+  components: z.union([z.string(), z.array(z.unknown())]).optional(),
+  coordinates: coordinatesField,
   address_city: z.string().optional(),
   full_address: z.string().optional(),
   address_state: z.string().optional(),
@@ -40,14 +58,13 @@ export const stEventSession = z.object({
   location_data: stLocationData.nullable(),
   // PostGIS WKT `POINT (lon lat)` — note lon first. Null when ungeocoded.
   lonlat: z.string().nullable(),
-  // Empty string (not null) when the session has no address.
-  location_address: z.string(),
+  location_address: z.string().nullable(),
   note: z.string().nullable(),
   tags: z.array(z.string()),
   event_type: z.string(),
   show_rsvp_bar: z.boolean(),
   show_title_in_form: z.boolean(),
-  max_capacity: z.number().int(),
+  max_capacity: z.number().int().nullable(),
   zoom_account_id: z.number().int().nullable(),
   zoom_meeting_id: z.number().int().nullable(),
   zoom_meeting_data: z.unknown().nullable(),
@@ -74,10 +91,10 @@ export const stEvent = z.object({
   tags: z.array(z.string()),
   campaign_tags: z.array(z.string()),
   event_sessions: z.array(stEventSession),
-  event_page_url: z.string(),
-  event_page_id: z.number().int(),
+  event_page_url: z.string().nullable(),
+  event_page_id: z.number().int().nullable(),
   image_url: z.string().nullable(),
-  description: z.string(),
+  description: z.string().nullable(),
   hide_address_until_rsvp: z.boolean(),
   show_in_web_calendars: z.boolean(),
   primary_event_id: z.number().int(),
